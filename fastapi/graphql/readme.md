@@ -1,1 +1,1 @@
-só 1 teste
+Aqui ficarão os estudos de api com graphql
