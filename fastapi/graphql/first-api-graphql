@@ -1,0 +1,137 @@
+from flask_graphql import GraphQLView
+from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
+from flask import Flask
+import graphene
+import os
+from sqlalchemy import Table, Column, Integer, ForeignKey, create_engine, String
+from sqlalchemy.orm import relationship, backref, scoped_session, sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+
+# Configs
+app = Flask(__name__)
+Base = declarative_base()
+basedir = os.path.abspath(os.path.dirname(__file__))
+engine = create_engine('sqlite:///' + os.path.join(basedir, 'database_many_many.sqlite'))
+db_session = scoped_session(sessionmaker(autocommit=False, bind=engine ))
+Base.query = db_session.query_property()
+app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+
+# rota padrão
+
+
+@app.route('', methods=['GET'])
+def index():
+    return "Olá, <a href='localhost:5000/graphql'>Acesse aqui</a>"
+
+
+# models SQLALCHEMY MANY TO MANY
+association_table = Table('association', Base.metadata,
+    Column('users_id', ForeignKey('users.id'), primary_key=True),
+    Column('posts_id', ForeignKey('posts.id'), primary_key=True)
+)
+
+
+class User(Base):
+    __tablename__ = 'users'
+    uuid = Column(Integer, primary_key=True)
+    nome = Column(String(32))
+
+    posts = relationship(
+        "Post",
+        secondary=association_table,
+        back_populates="users",
+    )
+
+
+class Post(Base):
+    __tablename__ = 'posts'
+    uuid = Column(Integer, primary_key=True)
+    title = Column(String(32))
+    content = Column(String(256))
+    users = relationship(
+        "Post",
+        secondary=association_table,
+        back_populates="posts",
+    )
+
+# ##TRANSFORMANDO MODELS EM SQLALCHEMY OBJECT#
+
+
+class PostObject(SQLAlchemyObjectType):
+    class Meta:
+        model = Post
+#interfaces = (graphene.relay.Node,)
+
+
+class UserObject(SQLAlchemyObjectType):
+    class Meta:
+        model = User
+#interfaces = (graphene.relay.Node,)
+
+
+
+class Query(graphene.ObjectType):
+#node = graphene.relay.Node.Field()
+    all_posts = SQLAlchemyConnectionField(PostObject)
+    all_users = SQLAlchemyConnectionField(UserObject)
+
+
+# ## MUTATIONS ###
+class InputCreatePost(graphene.InputObjectType):
+    uuid = graphene.Int(required=True)
+    title = graphene.String()
+    content = graphene.String()
+    authors_id = graphene.Int()
+
+
+class create_Post(graphene.Mutation):
+    class Arguments:
+        data = InputCreatePost()
+
+    user = graphene.Field(PostObject)
+
+    def mutate(self, info, data):
+        autores = User.query.all()
+
+        autores_do_post = [autor.uuid for autor in autores if autor.uuid in data.authors_id]
+
+        db_session.add(autores)
+        db_session.commit()
+
+        return create_Post(user=autor)
+
+
+
+
+"""
+#configuração dos models para se tornarem queries
+        
+#conectando os SqlObjects
+    
+    
+class Mutation(graphene.ObjectType):
+    create_post = CreatePost.Field()
+    create_author = CreateAuthor.Field()
+    update_post = UpdatePost.Field()
+    update_author = UpdateAuthor.Field()
+    delete_post = DeletePost.Field()
+    delete_author = DeleteAuthor.Field()
+schema = graphene.Schema(query=Query, mutation=Mutation)
+#rota
+app.add_url_rule(
+    '/graphql',
+    view_func=GraphQLView.as_view(
+        'graphql',
+        schema=schema,
+        graphiql=True  # for having the GraphiQL interface
+    )
+)
+"""
+
+
+
+#execução
+if __name__ == "__main__":
+    Base.metadata.create_all(bind=engine)
+    app.run(debug=True)
