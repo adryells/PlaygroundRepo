@@ -1,0 +1,166 @@
+*{margin: 0; padding: 0; box-sizing: border-box; font-size: 100%; font-family: cursive;}
+nav, ul{list-style: none;}
+a{text-decoration: none; cursor: pointer; opacity: 0.9; color: white;}
+a:hover{opacity: 1; color: red;}
+header{
+	background-color: white;
+	width: 100%;
+	position: absolute;
+	top: 0; left: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px 50px;
+}
+header img{width: 100px; height: 50px;}
+header nav{display: flex;}
+header li a{color: black;}
+header li{margin: 0 15px;}
+header li:first-chil{margin-left: 0;}
+header li:last-chil{margin-right: 0;}
+@media(max-width: 700px;){
+	header{flex-direction: column;}
+	header img{margin-bottom: 15px;}
+}
+
+.hero {
+	background-image: url("../img/centro.png");
+	color: white;
+	text-decoration: none;
+	background-size: cover;
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	text-align: center;
+}
+
+.hero h1{
+	margin-top: 20px;
+	font-size: 3rem;
+	margin-bottom: 15px;
+}
+
+.hero h3{
+	font-size: 2rem;
+	margin-bottom: 15px;
+}
+
+.hero .buton{
+	background-color: #fff;
+	border-radius: 4px;
+	color: black;
+	padding: 20px 50px;
+	text-transform: uppercase;
+}
+
+@media(max-width: 700px;){
+	.hero h1{font-size: 2rem;}
+
+	.hero h3{font-size: 1.5rem;}
+}
+
+.conheca{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 100px 50px;
+}
+
+.conheca h3{
+	font-size: 2rem;
+	margin-bottom: 35px;
+	text-align: center;
+}
+
+.conheca p{
+	max-width: 800px;
+	margin-bottom: 35px;
+	text-align: center;
+}
+
+.conheca hr{
+	width: 250px;
+	height: 2px;
+	background-color: black;
+	margin-bottom: 70px;
+}
+
+.conheca .grid{
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.conheca .grid li{
+	height: 350px;
+	padding: 20px;
+	background-clip: content-box;
+	background-size: cover;
+	background-position: center;
+}
+
+.conheca .grid li.small{
+	flex-basis: 50%;
+	border-radius: 34px;
+}
+.conheca .grid li.large{
+	flex-basis: 50%;
+	border-radius: 34px;
+
+}
+
+.char{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 100px 50px;
+	background-color: black;
+	color: white;
+}
+
+.char h4{
+	font-size: 2rem;
+	margin-bottom: 35px;
+	text-align: center;
+}
+
+.char p{
+	max-width: 800px;
+	margin-bottom: 35px;
+	text-align: center;
+}
+
+.char hr{
+	width: 250px;
+	height: 2px;
+	border-color: red;
+	margin-bottom: 70px;
+}
+
+.char .grid{
+	width: 100%;
+	display: flex;
+}
+
+.char .grid li{
+	padding: 0 30px;
+	text-align: center;
+}
+
+.char .grid li i{
+	color: #76a960;
+	font-size: 50px;
+	margin-bottom: 30px;
+}
+
+.char .grid li h4{
+	color: white;
+	font-size: 1.5rem;
+	margin-bottom: 30px;
+}
+
+.char .grid li p{
+	color: white;
+}
