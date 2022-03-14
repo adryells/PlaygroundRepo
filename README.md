@@ -1,2 +1,2 @@
-# PythonRandomStudies
-Repósitorio para salvar códigos de diversos estudos
+# Repositório para guardar diversos códigos aleatórios
+[descrição sinistra aqui um dia...]
