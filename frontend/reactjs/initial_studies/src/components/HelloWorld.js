@@ -3,7 +3,7 @@ import Phrase from "./Phrase";
 function HelloWorld() {
   return (
     <div>
-      Olá, Mundão!!!
+      <p>Olá, Mundão!!!</p>
       <Phrase />
     </div>
   )
