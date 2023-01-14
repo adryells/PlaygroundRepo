@@ -1,4 +1,4 @@
-import Container from "../layout/Container/Container";
+import Container from "../../layout/Container/Container";
 
 function Projects() {
   return (
