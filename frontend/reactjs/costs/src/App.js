@@ -11,17 +11,19 @@ import Projects from './components/pages/Projects/Projects'
 function App() {
   return (
     <Router>
+
       <NavBar />
       <Container customClass="min-height">
         <Routes>
-          <Route path='/' element={<Home />}></Route>
-          <Route path='/company' element={<Company />}></Route>
-          <Route path='/contact' element={<Contact />}></Route>
-          <Route path='/newproject' element={<NewProject />}></Route>
-          <Route path='/projects' element={<Projects />}></Route>
+          <Route path='/' element={<Home />} />
+          <Route path='/company' element={<Company />} />
+          <Route path='/contact' element={<Contact />} />
+          <Route path='/newproject' element={<NewProject />} />
+          <Route path='/projects' element={<Projects />} />
         </Routes>
       </Container>
       <Footer />
+
     </Router>
   );
 }
