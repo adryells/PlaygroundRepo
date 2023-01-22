@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Container from "../../layout/Container/Container";
+import Message from "../../layout/Message/Message";
 
 function Projects() {
   const [projects, setProjects] = useState([])
@@ -21,17 +22,20 @@ function Projects() {
   )
 
   return (
-    <Container>
-      {projects.map((project) => (
+    <Message msg="Some msg" />
+  );
+  {/*
+      <Container>
+       {projects.map((project) => (
         <div>
           <h1>{project.name}</h1>
           <p>Orçamento: {project.budget}</p>
           <p>Custos: {project.cost} </p>
         </div>
       ))
-      }
-    </Container>
-  );
+      
+       </Container> */}
+
 }
 
 export default Projects;
